@@ -3,9 +3,10 @@ import { Box, Button } from "@gluestack-ui/themed"
 import { NavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
-import { getAllPokemon } from '../api_services/get_services';
+import { getAllPokemon } from '../api_services/getServices';
 import PokemonListContainer from '../components/PokemonListContainer';
 import SearchInput from '../components/SearchInput';
+import { useAppContext } from '../context/AppContext';
 
 type RootStackParamList = {
   Home: { name: string };
@@ -23,28 +24,15 @@ const styles = StyleSheet.create({
 });
 
 const AllPokemon = ({ navigation }: { navigation: AllPokemonScreenNavigationProp }) => {
-  const [allPokemon, setAllPokemon] = useState<any[]>([]);
-  const [filteredPokemon, setFilteredPokemon] = useState<any[]>([]);
+  const { allPokemon } = useAppContext();
+  const [allPokemonScreen, setAllPokemonScreen] = useState<any[]>(allPokemon);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const pokemonData = await getAllPokemon();
-        setAllPokemon(pokemonData);
-        setFilteredPokemon(pokemonData); 
-      } catch (error) {
-        console.error('Error fetching Pokemon data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  
   const filterPokemonByName = (searchInput: string) => {
-    const filteredValues = allPokemon.filter(pokemonData =>
-      pokemonData.name.toLowerCase().includes(searchInput.toLowerCase())
+    const filteredValues = allPokemonScreen.filter(pokemonData =>
+      pokemonData?.name.toLowerCase().includes(searchInput.toLowerCase())
     );
-    setFilteredPokemon(filteredValues);
+    setAllPokemonScreen(filteredValues);
   }
 
   return (
@@ -55,7 +43,7 @@ const AllPokemon = ({ navigation }: { navigation: AllPokemonScreenNavigationProp
         <>
           <SearchInput onChangeFunc={filterPokemonByName} />
           <PokemonListContainer 
-            pokemonData={filteredPokemon} 
+            pokemonData={allPokemonScreen} 
             navigation={navigation} 
           />
         </>

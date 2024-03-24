@@ -4,9 +4,9 @@ import { Box } from "@gluestack-ui/themed"
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import PokemonCard from '../components/PokemonDetailCard';
-import { getPokemonDetail } from '../api_services/get_services';
 import { toTitleCase } from '../utils/utils';
 import { RootStackParamList } from '../types/types';
+import { getPokemonDetail } from '../api_services/get_services';
 
 type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 
