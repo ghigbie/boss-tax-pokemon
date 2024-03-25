@@ -1,6 +1,16 @@
-import React from 'react';
-import { Image, View, StyleSheet } from 'react-native'; 
-import { Card, Text, Heading, HStack, Icon, Link, LinkText } from '@gluestack-ui/themed';
+import React, { useState } from 'react';
+import { 
+  Image, 
+  View, 
+  StyleSheet, 
+  Pressable, 
+  TextInput 
+} from 'react-native'; 
+import { 
+  Card, 
+  Text, 
+  Heading 
+} from '@gluestack-ui/themed';
 import { toTitleCase } from '../utils/utils';
 import { PokemonDetail } from '../types/types';
 
@@ -12,6 +22,9 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginBottom: 8,
+  },
+  input: {
+    width: '100%'
   },
   imageStyle: {
     width: '100%', 
@@ -31,41 +44,64 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginBottom: 8
   }
-})
+});
 
 interface PokemonCardProps {
-    name: string;
-    pokemonDetail: PokemonDetail;
+  name: string;
+  pokemonDetail: PokemonDetail;
 }
 
 const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) => {
-    const { height, weight, sprites, types } = pokemonDetail;
+  const [editName, setEditName] = useState(false);
+  const [editableName, setEditableName] = useState<string>(name);
+  const { height, weight, sprites, types } = pokemonDetail;
 
-    return (
-        <Card p="$5" borderRadius="$lg" maxWidth={'80%'} m="$3" style={styles.container}>
+  const handleChange = (inputText: string) => {
+    setEditableName(inputText);
+  };
+
+  return (
+    <Card p="$5" borderRadius="$lg" maxWidth={'80%'} m="$3" style={styles.container}>
+      <Pressable onPress={() => setEditName(true)} disabled={editName}>
+        {
+          !editName ? 
+          (
             <Heading size="md" fontFamily="$heading" mb="$4" style={styles.heading}>
-                {toTitleCase(name)}
+              {toTitleCase(name)}
             </Heading>
-            <Image
-                style={styles.imageStyle}
-                source={{ uri: sprites?.front_default }}
-                resizeMode='contain'
+          ) : (
+            <TextInput 
+              placeholder={toTitleCase(editableName)} 
+              onChangeText={handleChange}  
+              style={styles.input}
+              value={toTitleCase(editableName)}
             />
-            <View style={styles.detailsContainer}>
-            <Text style={styles.detailText}>Height: {height}</Text>
-            <Text style={styles.detailText}>Weight: {weight}</Text>
-            <View style={styles.detailText}>
-                <Text>Type:</Text>
-                {types?.map((type: any) => 
-                  <Text  
-                    style={styles.listText}
-                    key={type.type.name}>
-                      {toTitleCase(type.type.name)}
-                  </Text>)}
-            </View>
-            </View>
-        </Card>
-    );
+          )
+        }
+      </Pressable>
+
+      <Image
+        style={styles.imageStyle}
+        source={{ uri: sprites?.front_default }}
+        resizeMode='contain'
+      />
+      
+      <View style={styles.detailsContainer}>
+        <Text style={styles.detailText}>Height: {height}</Text>
+        <Text style={styles.detailText}>Weight: {weight}</Text>
+        <View style={styles.detailText}>
+          <Text>Type:</Text>
+          {types?.map((type: any) => 
+            <Text  
+              style={styles.listText}
+              key={type.type.name}>
+                {toTitleCase(type.type.name)}
+            </Text>
+          )}
+        </View>
+      </View>
+    </Card>
+  );
 };
 
 export default PokemonDetailCard;
