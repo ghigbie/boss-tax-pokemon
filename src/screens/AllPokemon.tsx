@@ -11,8 +11,13 @@ type AllPokemonScreenRouteProp = RouteProp<RootStackParamList, 'AllPokemon'>;
 
 type AllPokemonScreenNavigationProp = {
   navigation: StackNavigationProp<RootStackParamList, 'AllPokemon'>;
+};
+
+type AllPokemonScreenProps = {
+  navigation: AllPokemonScreenNavigationProp;
   route?: AllPokemonScreenRouteProp;
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AllPokemon = ({ navigation }: { navigation: AllPokemonScreenNavigationProp }) => {
+const AllPokemon = ({ navigation }: AllPokemonScreenProps) => {
   const { allPokemon } = useAppContext();
   const [allPokemonScreen, setAllPokemonScreen] = useState<any[]>(allPokemon);
   const [originalPokemonData, setOriginalPokemonData] = useState<any[]>(allPokemon);

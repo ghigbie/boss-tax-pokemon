@@ -10,8 +10,12 @@ import { getPokemonDetail } from '../api_services/get_services';
 
 type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 
-type DetailScreenProps = {
+type DetailScreenNavigationProp = {
   navigation: StackNavigationProp<RootStackParamList, 'Detail'>;
+};
+
+type DetailScreenProps = {
+  navigation?: DetailScreenNavigationProp;
   route: DetailScreenRouteProp;
 };
 
@@ -24,8 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-
-const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
+const DetailScreen = ({ route }: DetailScreenProps) => {
   const { name, url } = route.params;
   const [pokemonDetail, setPokemonDetail] = useState<any>(null);
 
