@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { getAllPokemon } from '../api_services/get_services';
+import { PokemonInListType } from '../types/types';
 
 type AppContextType = {
-  allPokemon: object[];
+  allPokemon: PokemonInListType[];
   setAllPokemon: (value: []) => void;
 }
 
@@ -13,7 +14,7 @@ interface AppContextProps {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children }: AppContextProps) => {
-  const [allPokemon, setAllPokemon] = useState<any[]>([]);
+  const [allPokemon, setAllPokemon] = useState<PokemonInListType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
