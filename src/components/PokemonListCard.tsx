@@ -18,7 +18,6 @@ const styles =  StyleSheet.create({
 const PokemonListCard = ({ name, url, navigation}: PokemonListCardProps) => {
 
     const handleOnPress = () => {
-        console.log('on press pressed', url);
         navigation?.navigate("Detail", {name, url})
     }
 
