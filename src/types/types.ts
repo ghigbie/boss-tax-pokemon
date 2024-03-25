@@ -4,6 +4,11 @@ export type RootStackParamList = {
     Detail: { name: string; url: string };
   };
 
+export type PokemonInListType = {
+    name: string;
+    url: string;
+}
+
 export type PokemonSprites = {
     back_default: string;
     back_female: string;
