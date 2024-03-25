@@ -1,18 +1,18 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { Box, Button } from "@gluestack-ui/themed"
-import { NavigationProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import { useEffect, useState } from 'react';
-import { getAllPokemon } from '../api_services/getServices';
 import PokemonListContainer from '../components/PokemonListContainer';
 import SearchInput from '../components/SearchInput';
 import { useAppContext } from '../context/AppContext';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../types/types';
 
-type RootStackParamList = {
-  Home: { name: string };
+type AllPokemonScreenRouteProp = RouteProp<RootStackParamList, 'AllPokemon'>;
+
+type AllPokemonScreenNavigationProp = {
+  navigation: StackNavigationProp<RootStackParamList, 'AllPokemon'>;
+  route?: AllPokemonScreenRouteProp;
 };
-
-type AllPokemonScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,10 +26,15 @@ const styles = StyleSheet.create({
 const AllPokemon = ({ navigation }: { navigation: AllPokemonScreenNavigationProp }) => {
   const { allPokemon } = useAppContext();
   const [allPokemonScreen, setAllPokemonScreen] = useState<any[]>(allPokemon);
+  const [originalPokemonData, setOriginalPokemonData] = useState<any[]>(allPokemon);
 
-  
+  useEffect(() => {
+    setOriginalPokemonData(allPokemon);
+    setAllPokemonScreen(allPokemon);
+  }, [allPokemon]);
+
   const filterPokemonByName = (searchInput: string) => {
-    const filteredValues = allPokemonScreen.filter(pokemonData =>
+    const filteredValues = originalPokemonData.filter(pokemonData =>
       pokemonData?.name.toLowerCase().includes(searchInput.toLowerCase())
     );
     setAllPokemonScreen(filteredValues);
