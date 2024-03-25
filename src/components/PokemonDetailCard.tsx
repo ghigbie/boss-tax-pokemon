@@ -12,7 +12,8 @@ import {
   Heading 
 } from '@gluestack-ui/themed';
 import { toTitleCase } from '../utils/utils';
-import { PokemonDetail } from '../types/types';
+import { PokemonDetail, PokemonInListType } from '../types/types';
+import { useAppContext } from '../context/AppContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,52 +53,76 @@ interface PokemonCardProps {
 }
 
 const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) => {
-  const [editName, setEditName] = useState(false);
+  const { allPokemon, setAllPokemon } = useAppContext();
+  const [canEditName, setCanEditName] = useState(false);
   const [editableName, setEditableName] = useState<string>(name);
+  const [placeholder, setPlaceholder] = useState<string>(name);
   const { height, weight, sprites, types } = pokemonDetail;
 
   const handleChange = (inputText: string) => {
     setEditableName(inputText);
+    setPlaceholder(inputText);
+  };
+
+  const editPokemonList = (newName: string) => {
+    const updatedPokemonList = allPokemon.map((pokemon: PokemonInListType) => {
+      if (pokemon.name === name) {
+        return { ...pokemon, name: newName }; 
+      }
+      return pokemon;
+    });
+  
+    const updatedPokemonIndex = updatedPokemonList.findIndex((pokemon: PokemonInListType) => pokemon.name === newName);
+    if (updatedPokemonIndex !== -1) {
+      const updatedPokemon = updatedPokemonList.splice(updatedPokemonIndex, 1)[0]; 
+      setAllPokemon([updatedPokemon, ...updatedPokemonList]); 
+    } else {
+      setAllPokemon(updatedPokemonList);
+    }
   };
 
   return (
     <Card p="$5" borderRadius="$lg" maxWidth={'80%'} m="$3" style={styles.container}>
-      <Pressable onPress={() => setEditName(true)} disabled={editName}>
-        {
-          !editName ? 
-          (
-            <Heading size="md" fontFamily="$heading" mb="$4" style={styles.heading}>
-              {toTitleCase(name)}
-            </Heading>
-          ) : (
-            <TextInput 
-              placeholder={toTitleCase(editableName)} 
-              onChangeText={handleChange}  
-              style={styles.input}
-              value={toTitleCase(editableName)}
-            />
-          )
-        }
+      <Pressable onPress={() => setCanEditName(true)} disabled={canEditName}>
+        {!canEditName ? (
+          <Heading size="md" fontFamily="$heading" mb="$4" style={styles.heading}>
+            {toTitleCase(editableName)}
+          </Heading>
+        ) : (
+          <TextInput
+            placeholder={toTitleCase(editableName)}
+            onChangeText={handleChange}
+            style={styles.input}
+            value={toTitleCase(editableName)}
+            onFocus={() => {
+              setEditableName('');
+              setPlaceholder('');
+            }}
+            onBlur={() => {
+              if (editableName) {              
+                setCanEditName(false);
+                editPokemonList(editableName);
+              } else {
+                setEditableName(name);
+                setPlaceholder(name);
+              }
+            }}
+          />
+        )}
       </Pressable>
 
-      <Image
-        style={styles.imageStyle}
-        source={{ uri: sprites?.front_default }}
-        resizeMode='contain'
-      />
-      
+      <Image style={styles.imageStyle} source={{ uri: sprites?.front_default }} resizeMode='contain' />
+
       <View style={styles.detailsContainer}>
         <Text style={styles.detailText}>Height: {height}</Text>
         <Text style={styles.detailText}>Weight: {weight}</Text>
         <View style={styles.detailText}>
           <Text>Type:</Text>
-          {types?.map((type: any) => 
-            <Text  
-              style={styles.listText}
-              key={type.type.name}>
-                {toTitleCase(type.type.name)}
+          {types?.map((type: any) => (
+            <Text style={styles.listText} key={type.type.name}>
+              {toTitleCase(type.type.name)}
             </Text>
-          )}
+          ))}
         </View>
       </View>
     </Card>
