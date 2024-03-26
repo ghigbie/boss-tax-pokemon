@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, SafeAreaView } from 'react-native';
-import { Box } from "@gluestack-ui/themed"
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import PokemonCard from '../components/PokemonDetailCard';
 import { toTitleCase } from '../utils/utils';
 import { RootStackParamList } from '../types/types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 import { getPokemonDetail } from '../api_services/get_services';
+import { COLORS } from '../constants/styles';
 
 type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 
-type DetailScreenNavigationProp = {
+type DetailScreenNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Detail'>;
-};
-
-type DetailScreenProps = {
-  navigation?: DetailScreenNavigationProp;
   route: DetailScreenRouteProp;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.darkGrey,
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
 
-const DetailScreen = ({ route }: DetailScreenProps) => {
+const DetailScreen: React.FC<DetailScreenNavigationProps> = ({ route, navigation }) => {
   const { name, url } = route.params;
   const [pokemonDetail, setPokemonDetail] = useState<any>(null);
 
@@ -45,15 +41,14 @@ const DetailScreen = ({ route }: DetailScreenProps) => {
   }, [url]);
 
   return (
-      <SafeAreaView style={styles.container}>
-        {!pokemonDetail ? (
-          <Text>Fetching data for {toTitleCase(name)}...</Text>
-        ) : (
-          <PokemonCard name={name} pokemonDetail={pokemonDetail} />
-        )}
-      </SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      {!pokemonDetail ? (
+        <Text>Fetching data for {toTitleCase(name)}...</Text>
+      ) : (
+        <PokemonCard name={name} pokemonDetail={pokemonDetail} />
+      )}
+    </SafeAreaView>
   );
 };
 
-
-export default DetailScreen;
+export default DetailScreen as React.ComponentType;
