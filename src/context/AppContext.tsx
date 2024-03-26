@@ -4,7 +4,7 @@ import { PokemonInListType } from '../types/types';
 
 type AppContextType = {
   allPokemon: PokemonInListType[];
-  setAllPokemon: (value: []) => void;
+  setAllPokemon: (value: PokemonInListType[]) => void;
 }
 
 interface AppContextProps {
