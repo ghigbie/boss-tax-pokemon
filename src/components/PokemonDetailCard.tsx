@@ -14,18 +14,22 @@ import {
 import { toTitleCase } from '../utils/utils';
 import { PokemonDetail, PokemonInListType } from '../types/types';
 import { useAppContext } from '../context/AppContext';
+import { COLORS } from '../constants/styles';
 
 const styles = StyleSheet.create({
   container: {
     width: '80%',
     height: '90%',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: COLORS.black,
   },
   heading: {
     marginBottom: 8,
+    color: COLORS.text,
   },
   input: {
-    width: '100%'
+    width: '100%',
+    color: COLORS.text,
   },
   imageStyle: {
     width: '100%', 
@@ -38,12 +42,17 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft: 16,
   },
+  typeText: {
+    color: COLORS.text,
+  },
   detailText: {
     marginBottom: 16,
+    color: COLORS.text,
   },
   listText: {
     marginLeft: 16,
-    marginBottom: 8
+    marginBottom: 8,
+    color: COLORS.text,
   }
 });
 
@@ -82,7 +91,7 @@ const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) 
   };
 
   return (
-    <Card p="$5" borderRadius="$lg" maxWidth={'80%'} m="$3" style={styles.container}>
+    <Card p="$5" borderRadius="$3xl" maxWidth={'80%'} m="$3" style={styles.container}>
       <Pressable onPress={() => setCanEditName(true)} disabled={canEditName}>
         {!canEditName ? (
           <Heading size="md" fontFamily="$heading" mb="$4" style={styles.heading}>
@@ -117,7 +126,7 @@ const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) 
         <Text style={styles.detailText}>Height: {height}</Text>
         <Text style={styles.detailText}>Weight: {weight}</Text>
         <View style={styles.detailText}>
-          <Text>Type:</Text>
+          <Text style={styles.typeText}>Type:</Text>
           {types?.map((type: any) => (
             <Text style={styles.listText} key={type.type.name}>
               {toTitleCase(type.type.name)}
