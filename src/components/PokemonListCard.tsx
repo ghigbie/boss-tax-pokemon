@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet } from 'react-native';
-import { Card, Text, Heading, ArrowRightIcon, HStack, Icon, Link, LinkText } from '@gluestack-ui/themed';
+import { Card, Text, Heading, ArrowRightIcon, HStack, Icon } from '@gluestack-ui/themed';
 import { toTitleCase } from '../utils/utils';
+import { COLORS } from '../constants/styles';
 
 interface PokemonListCardProps {
     name: string;
@@ -12,7 +13,8 @@ const styles =  StyleSheet.create({
     container: {
         marginVertical: 6,
         marginHorizontal: 8,
-    }
+        backgroundColor: COLORS.black,
+    },
 })
 
 const PokemonListCard = ({ name, url, navigation}: PokemonListCardProps) => {
@@ -24,12 +26,12 @@ const PokemonListCard = ({ name, url, navigation}: PokemonListCardProps) => {
     return (
     <Pressable onPress={handleOnPress}>
     <Card style={styles.container}>
-      <Heading size="md" fontFamily="$heading" mb="$4">
+      <Heading size="2xl" fontFamily="$heading" mb="$4" color="$white">
         {toTitleCase(name)}
       </Heading>
         <HStack alignItems="center">
           <Text
-            size="sm"
+            size="lg"
             fontFamily="$heading"
             fontWeight="$semibold"
             color="$primary600"
@@ -41,7 +43,7 @@ const PokemonListCard = ({ name, url, navigation}: PokemonListCardProps) => {
 
           <Icon
             as={ArrowRightIcon}
-            size="lg"
+            size="xl"
             color="$primary600"
             mt="$0.5"
             ml="$1"
