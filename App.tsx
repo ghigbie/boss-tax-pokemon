@@ -1,4 +1,4 @@
-import { GluestackUIProvider} from "@gluestack-ui/themed";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import Navigation from './src/navigation/Navigation';
 import React from "react";
@@ -8,7 +8,7 @@ import pokemonTheme from "./src/theme/pokemonTheme";
 export default function App() {
   return (
     <GluestackUIProvider config={{ ...config, theme: pokemonTheme }}>
-       <AppContextProvider>
+      <AppContextProvider>
         <Navigation />
       </AppContextProvider>
     </GluestackUIProvider>

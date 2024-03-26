@@ -41,7 +41,7 @@ const BannerSearchInput = ({ onChangeFunc }: BannerSearchInputProps) => {
         style={styles.input}
         placeholder={showPlacehodler ? 'Search for a pokemon here' : ''}
         onFocus={() => setShowPlaceholder(false)}
-        onBlur={() => {searchTerm.trim() === '' && setShowPlaceholder(true)}}
+        onBlur={() => { searchTerm.trim() === '' && setShowPlaceholder(true) }}
         onChangeText={handleChange}
         value={searchTerm}
         placeholderTextColor={COLORS.text} // Use the theme color for placeholder text

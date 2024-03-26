@@ -4,31 +4,31 @@ import { toTitleCase } from '../utils/utils';
 import { COLORS } from '../constants/styles';
 
 interface PokemonListCardProps {
-    name: string;
-    url: string;
-    navigation: any;
+  name: string;
+  url: string;
+  navigation: any;
 }
 
-const styles =  StyleSheet.create({
-    container: {
-        marginVertical: 6,
-        marginHorizontal: 8,
-        backgroundColor: COLORS.black,
-    },
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 6,
+    marginHorizontal: 8,
+    backgroundColor: COLORS.black,
+  },
 })
 
-const PokemonListCard = ({ name, url, navigation}: PokemonListCardProps) => {
+const PokemonListCard = ({ name, url, navigation }: PokemonListCardProps) => {
 
-    const handleOnPress = () => {
-        navigation?.navigate("Detail", {name, url})
-    }
+  const handleOnPress = () => {
+    navigation?.navigate("Detail", { name, url })
+  }
 
-    return (
+  return (
     <Pressable onPress={handleOnPress}>
-    <Card style={styles.container}>
-      <Heading size="2xl" fontFamily="$heading" mb="$4" color="$white">
-        {toTitleCase(name)}
-      </Heading>
+      <Card style={styles.container}>
+        <Heading size="2xl" fontFamily="$heading" mb="$4" color="$white">
+          {toTitleCase(name)}
+        </Heading>
         <HStack alignItems="center">
           <Text
             size="lg"
@@ -50,9 +50,9 @@ const PokemonListCard = ({ name, url, navigation}: PokemonListCardProps) => {
             $dark-color="$primary300"
           />
         </HStack>
-    </Card>
+      </Card>
     </Pressable>
-);
+  );
 }
 
 

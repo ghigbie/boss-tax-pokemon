@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  Image, 
-  View, 
-  StyleSheet, 
-  Pressable, 
-  TextInput 
-} from 'react-native'; 
-import { 
-  Card, 
-  Text, 
-  Heading 
+import {
+  Image,
+  View,
+  StyleSheet,
+  Pressable,
+  TextInput
+} from 'react-native';
+import {
+  Card,
+  Text,
+  Heading
 } from '@gluestack-ui/themed';
 import { toTitleCase } from '../utils/utils';
 import { PokemonDetail, PokemonInListType } from '../types/types';
@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     color: COLORS.text,
   },
   imageStyle: {
-    width: '100%', 
+    width: '100%',
     height: 300,
-    marginBottom: 16, 
+    marginBottom: 16,
   },
   detailsContainer: {
     justifyContent: 'flex-start',
@@ -76,22 +76,22 @@ const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) 
   const editPokemonList = (newName: string) => {
     const updatedPokemonList = allPokemon.map((pokemon: PokemonInListType) => {
       if (pokemon.name === name) {
-        return { ...pokemon, name: newName }; 
+        return { ...pokemon, name: newName };
       }
       return pokemon;
     });
-  
+
     const updatedPokemonIndex = updatedPokemonList.findIndex((pokemon: PokemonInListType) => pokemon.name === newName);
     if (updatedPokemonIndex !== -1) {
-      const updatedPokemon = updatedPokemonList.splice(updatedPokemonIndex, 1)[0]; 
-      setAllPokemon([updatedPokemon, ...updatedPokemonList]); 
+      const updatedPokemon = updatedPokemonList.splice(updatedPokemonIndex, 1)[0];
+      setAllPokemon([updatedPokemon, ...updatedPokemonList]);
     } else {
       setAllPokemon(updatedPokemonList);
     }
   };
 
   return (
-    <Card p="$5" borderRadius="$3xl" maxWidth={'80%'} m="$3" style={styles.container}>
+    <Card p="$5" borderRadius="$lg" maxWidth={'80%'} m="$3" style={styles.container}>
       <Pressable onPress={() => setCanEditName(true)} disabled={canEditName}>
         {!canEditName ? (
           <Heading size="md" fontFamily="$heading" mb="$4" style={styles.heading}>
@@ -108,7 +108,7 @@ const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) 
               setPlaceholder('');
             }}
             onBlur={() => {
-              if (editableName) {              
+              if (editableName) {
                 setCanEditName(false);
                 editPokemonList(editableName);
               } else {

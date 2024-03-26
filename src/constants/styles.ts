@@ -7,5 +7,4 @@ export const COLORS = {
     warning: '#FFD700', // Yellow
     darkGrey: '#383838', // Darkgrey
     black: '#000000' // Black
-
 }

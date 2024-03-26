@@ -7,17 +7,17 @@ import {
 import PokemonListCard from './PokemonListCard';
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: '100%',
-      backgroundColor: 'transparent',
-      paddingVertical: 16,
-    },
+  container: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: 'transparent',
+    paddingVertical: 16,
+  },
 });
 
 interface Pokemon {
-    name: string;
-    url: string;
+  name: string;
+  url: string;
 }
 
 interface PokemonListContainerProps {
@@ -25,7 +25,7 @@ interface PokemonListContainerProps {
   navigation: any;
 };
 
-const PokemonListContainer = ( {pokemonData, navigation}: PokemonListContainerProps) => {
+const PokemonListContainer = ({ pokemonData, navigation }: PokemonListContainerProps) => {
 
   const handleOnEndReached = () => {
     console.log("on end reached");
@@ -35,12 +35,12 @@ const PokemonListContainer = ( {pokemonData, navigation}: PokemonListContainerPr
     <View style={styles.container}>
       <FlatList
         data={pokemonData}
-        renderItem={({item}) => 
-            <PokemonListCard 
-                name={item.name} 
-            url={item.url} 
+        renderItem={({ item }) =>
+          <PokemonListCard
+            name={item.name}
+            url={item.url}
             navigation={navigation}
-            />}
+          />}
         keyExtractor={item => item.name}
         onEndReached={handleOnEndReached}
       />
@@ -48,4 +48,4 @@ const PokemonListContainer = ( {pokemonData, navigation}: PokemonListContainerPr
   );
 };
 
-export default PokemonListContainer ;
+export default PokemonListContainer;
