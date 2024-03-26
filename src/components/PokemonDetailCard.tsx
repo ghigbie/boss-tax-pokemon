@@ -76,7 +76,7 @@ const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) 
   const editPokemonList = (newName: string) => {
     const updatedPokemonList = allPokemon.map((pokemon: PokemonInListType) => {
       if (pokemon.name === name) {
-        return { ...pokemon, name: newName };
+        return { ...pokemon, oldName: pokemon.name, name: newName };
       }
       return pokemon;
     });
@@ -108,9 +108,9 @@ const PokemonDetailCard: React.FC<PokemonCardProps> = ({ name, pokemonDetail }) 
               setPlaceholder('');
             }}
             onBlur={() => {
-              if (editableName) {
-                setCanEditName(false);
-                editPokemonList(editableName);
+              setCanEditName(false);
+              if (editableName.trim()) {
+                editPokemonList(editableName.trim());
               } else {
                 setEditableName(name);
                 setPlaceholder(name);

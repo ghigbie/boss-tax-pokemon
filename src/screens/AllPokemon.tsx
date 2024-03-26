@@ -33,7 +33,8 @@ const AllPokemon = ({ navigation }: AllPokemonScreenNavigationProp) => {
 
   const filterPokemonByName = (searchInput: string) => {
     const filteredValues = originalPokemonData.filter(pokemonData =>
-      pokemonData?.name.toLowerCase().includes(searchInput.toLowerCase())
+      pokemonData?.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+      (pokemonData?.oldName && pokemonData.oldName.toLowerCase().includes(searchInput.toLowerCase()))
     );
     setAllPokemonScreen(filteredValues);
   };
